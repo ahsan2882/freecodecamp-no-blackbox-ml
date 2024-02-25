@@ -18,4 +18,6 @@ draw.paths = (ctx, paths, color = "black") => {
   }
 };
 
-module.exports = draw;
+if (typeof module !== "undefined") {
+  module.exports = draw;
+}
