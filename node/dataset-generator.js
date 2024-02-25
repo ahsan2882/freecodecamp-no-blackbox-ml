@@ -16,17 +16,21 @@ fileNames.forEach((fn) => {
   for (let label in drawings) {
     samples.push({ id, label, student_name: student, student_id: session });
     const paths = drawings[label];
-    fs.writeFileSync(
-      constants.JSON_DIR + "/" + id + ".json",
-      JSON.stringify(paths)
-    );
-    generateImageFile(constants.IMG_DIR + "/" + id + ".png", paths);
+    const jsonPath = constants.JSON_DIR + "/" + id + ".json";
+    if (!fs.existsSync(jsonPath)) {
+      fs.writeFileSync(jsonPath, JSON.stringify(paths));
+      generateImageFile(constants.IMG_DIR + "/" + id + ".png", paths);
+    }
     utils.printProgress(id, fileNames.length * 8);
     id++;
   }
 });
 
 fs.writeFileSync(constants.SAMPLES, JSON.stringify(samples));
+fs.writeFileSync(
+  constants.SAMPLES_JS,
+  "const samples = " + JSON.stringify(samples) + ";"
+);
 
 function generateImageFile(outFile, paths) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
