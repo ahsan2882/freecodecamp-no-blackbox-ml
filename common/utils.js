@@ -11,6 +11,10 @@ utils.printProgress = (count, max) => {
   process.stdout.write(count + "/" + max + " (" + percent + ")");
 };
 
+utils.groupBy = (objArray, groupMethod) => {
+  return Object.groupBy(objArray, groupMethod);
+};
+
 if (typeof module !== "undefined") {
   module.exports = utils;
 }
